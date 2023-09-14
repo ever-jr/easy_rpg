@@ -1,5 +1,6 @@
 import 'package:easy_rpg/screen/screen.dart';
 import 'package:easy_rpg/widget/app_logo.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Login extends Screen {
@@ -63,5 +64,14 @@ class _Button extends StatelessWidget {
       ),
       child: const Icon(Icons.start),
     );
+  }
+}
+
+class _SignInWithGoogleButton extends StatelessWidget {
+  const _SignInWithGoogleButton();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
   }
 }

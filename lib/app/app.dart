@@ -1,6 +1,8 @@
-import 'package:easy_rpg/app/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_rpg/screen/screens.dart';
+
+import 'app_colors.dart';
+import 'app_routes.dart';
 
 class App extends StatelessWidget {
   static const String name = 'Easy RPG';
@@ -16,7 +18,10 @@ class App extends StatelessWidget {
           seedColor: AppColors.primary,
         ),
       ),
-      home: const Login(),
+      routes: <String, WidgetBuilder>{
+        AppRoutes.login: (context) => const Login(),
+      },
+      initialRoute: AppRoutes.login,
     );
   }
 }
