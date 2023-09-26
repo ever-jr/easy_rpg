@@ -17,11 +17,13 @@ class App extends StatelessWidget {
           brightness: Brightness.light,
           seedColor: AppColors.primary,
         ),
+        useMaterial3: true,
       ),
-      routes: <String, WidgetBuilder>{
+      routes: {
+        AppRoutes.home: (context) => const Home(),
         AppRoutes.login: (context) => const Login(),
       },
-      initialRoute: AppRoutes.login,
+      initialRoute: AppRoutes.home,
     );
   }
 }

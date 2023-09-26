@@ -1,8 +1,0 @@
-import 'package:flutter/widgets.dart';
-
-abstract class Screen extends StatelessWidget {
-  const Screen({super.key});
-
-  @override
-  Widget build(BuildContext context);
-}
