@@ -1,3 +1,4 @@
+import 'package:easy_rpg/other/translator.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatelessWidget {
@@ -8,11 +9,11 @@ class Home extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(),
       body: ListView(
-        children: const [
+        children: [
           Card(
             child: ListTile(
-              title: Text('Title example'),
-              subtitle: Text('Subtitle test'),
+              title: Text('Name'.translateTo(Language.ptBR)),
+              subtitle: const Text('subtitle'),
             ),
           ),
         ],
