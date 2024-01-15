@@ -1,12 +1,16 @@
+enum ItemType { item, weapon, armor }
+
 class Item {
   final String name;
   final double weight;
   final double cost;
+  final ItemType type;
 
   const Item({
     required this.name,
     required this.weight,
     required this.cost,
+    required this.type,
   });
 }
 
@@ -18,7 +22,7 @@ final class Armor extends Item {
     required super.weight,
     required super.cost,
     required this.defense,
-  });
+  }) : super(type: ItemType.armor);
 }
 
 final class Weapon extends Item {
@@ -31,5 +35,5 @@ final class Weapon extends Item {
     required super.cost,
     required this.minDamage,
     required this.maxDamage,
-  });
+  }) : super(type: ItemType.weapon);
 }
