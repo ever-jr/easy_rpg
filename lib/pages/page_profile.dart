@@ -6,7 +6,13 @@ final class PageProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Center(
-      child: Text('Profile'),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text('Profile'),
+          Text('Your name'),
+        ],
+      ),
     );
   }
 }
