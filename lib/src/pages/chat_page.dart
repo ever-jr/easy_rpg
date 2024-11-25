@@ -1,19 +1,99 @@
 import 'package:flutter/material.dart';
 
-List<String> messages = [
-  "J'Zargo rolled the 20 dice...\nresult: 11",
-  "J'Zargo used Fire Sword",
-  "Goblin received -10 Health",
-  "Goblin died!",
-  "J'Zargo received 1 Dagger, 10 Gold",
-  "J'Zargo\nAy! that's nice",
-];
+Widget parseJsonMessageToWidget(List<dynamic> message) {
+  List<Widget> listWidgets = [];
 
-class ChatPage extends StatelessWidget {
+  for (final text in message) {
+    if (text is String) {
+      listWidgets.add(Text(text));
+
+    } else if (text is Map<String, dynamic> && text.containsKey("type")) {
+      final String type = text["type"];
+      final String msg = text["value"].toString();
+
+      Color color = Colors.white;
+
+      switch (type) {
+        case "user":
+          color = Colors.yellow;
+          break;
+        
+        case "damage":
+          color = Colors.red;
+          break;
+
+        case "item":
+          color = Colors.green;
+          break;
+        
+        case "dice":
+          color = Colors.grey;
+          break;
+
+        case "dice_result":
+          color = Colors.blue;
+          break;
+          
+        case "character":
+          color = Colors.black;
+          break;
+
+        case "attribute":
+          color = Colors.purple;
+          break;
+      }
+
+      listWidgets.add(Text(
+        msg,
+        style: TextStyle(color: color),
+      ));
+    }
+  }
+
+  return Wrap(spacing: 10, children: listWidgets);
+}
+
+class ChatPage extends StatefulWidget {
   static const String routeName = "/chat";
   static const double _messagePadding = 8;
+  
 
   const ChatPage({super.key});
+
+  @override
+  State<ChatPage> createState() => _ChatPageState();
+}
+
+class _ChatPageState extends State<ChatPage> {
+  final _inputController = TextEditingController();
+  final messages = [
+    [
+      {"type": "user", "value": "J'Zargo"},
+      "rolled the",
+      {"type": "dice", "value": 20},
+      "result: ",
+      {"type": "dice_result", "value": 11}
+    ],
+    [
+      {"type": "user", "value": "J'Zargo"},
+      "used the",
+      {"type": "item", "value": "Fire Sword"},
+    ],
+    [
+      {"type": "character", "value": "Goblin"},
+      "received",
+      {"type": "damage", "value": -10},
+      {"type": "attribute", "value": "Health"},
+    ],
+  ];
+
+
+  void _submitInput(String message) {
+    setState(() {
+      messages.add([message]);
+      _inputController.text = "";
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,19 +103,24 @@ class ChatPage extends StatelessWidget {
         padding: const EdgeInsets.all(24),
         child: ListView.separated(
           itemCount: messages.length,
-          itemBuilder: (_, index) => ChatMessage(messages[index]),
-          separatorBuilder: (_, __) => const SizedBox(height: _messagePadding),
+          itemBuilder: (_, index) => ChatMessage(
+            child: parseJsonMessageToWidget(messages[index]),
+          ),
+          separatorBuilder: (_, __) => const SizedBox(height: ChatPage._messagePadding),
         ),
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(24),
         child: Row(
           children: [
-            const Flexible(
-              child: TextField(),
+            Flexible(
+              child: TextField(
+                controller: _inputController,
+                onSubmitted: _submitInput,
+              ),
             ),
             ElevatedButton(
-              onPressed: () => {},
+              onPressed: () => _submitInput(_inputController.text),
               child: const Text('Enter'),
             ),
           ],
@@ -46,19 +131,40 @@ class ChatPage extends StatelessWidget {
 }
 
 class ChatMessage extends StatelessWidget {
-  final String _message;
-  const ChatMessage(
-    String message, {
+  final Widget child;
+  const ChatMessage({
     super.key,
-  }) : _message = message;
+    required this.child,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
-        child: Text(_message),
+        child: child,
       ),
     );
   }
 }
+
+class User {
+  final String name;
+  final Color color;
+
+  const User({
+    required this.name,
+    this.color = Colors.white,
+  });
+}
+
+class Message {
+  final User user;
+  final String text;
+
+  const Message({
+    required this.user,
+    required this.text,
+  });
+}
+

@@ -1,19 +1,22 @@
+import 'package:flutter/material.dart';
+import 'package:easy_rpg/src/components/map.dart';
 import 'package:easy_rpg/src/components/search.dart';
+import 'package:easy_rpg/src/components/buttons/square_button.dart';
 import 'package:easy_rpg/src/pages/chat_page.dart';
 import 'package:easy_rpg/src/pages/items_page.dart';
+import 'package:easy_rpg/src/components/player/buttons_abilities.dart';
 import 'package:easy_rpg/src/settings/settings_view.dart';
-import 'package:flutter/material.dart';
+import 'package:easy_rpg/src/parser/string_parsing.dart';
 
-const objectsOnMap = [
-  '😊',
-  '😊',
-  '😊',
-  '🌳',
-  '🌳',
-  '🌳',
-  '🌳',
-  '🌳',
-];
+
+const String map =
+"""
+t__t_
+_t___
+t___x
+t__t_
+__t__
+""";
 
 class HomePage extends StatelessWidget {
   static const routeName = '/home';
@@ -23,6 +26,39 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final middleScreenButtons = Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Column(
+          children: [
+            SquareButton(
+              Icons.list,
+              onPressed: () {
+                //Scaffold.of(context).openDrawer();
+              },
+            ),
+            const SizedBox(height: _padding),
+            const SquareButton(Icons.square_rounded),
+          ],
+        ),
+        Column(
+          children: [
+            SquareButton(
+              Icons.chat,
+              onPressed: () {
+                Navigator.restorablePushNamed(
+                  context,
+                  ChatPage.routeName,
+                );
+              },
+            ),
+            const SizedBox(height: _padding),
+            const SquareButton(Icons.book),
+          ],
+        ),
+      ],
+    );
+
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -43,43 +79,12 @@ class HomePage extends StatelessWidget {
         padding: const EdgeInsets.all(24),
         child: Stack(
           children: [
-            const GridMap(objects: objectsOnMap),
+            GridMap(objects: StringParsing.parseTextIntoMapObjects(map)),
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Spacer(flex: 1),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      children: [
-                        SquareButton(
-                          Icons.list,
-                          onPressed: () {
-                            //Scaffold.of(context).openDrawer();
-                          },
-                        ),
-                        const SizedBox(height: _padding),
-                        const SquareButton(Icons.square_rounded),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        SquareButton(
-                          Icons.chat,
-                          onPressed: () {
-                            Navigator.restorablePushNamed(
-                              context,
-                              ChatPage.routeName,
-                            );
-                          },
-                        ),
-                        const SizedBox(height: _padding),
-                        const SquareButton(Icons.book),
-                      ],
-                    ),
-                  ],
-                ),
+                middleScreenButtons,
                 const Spacer(flex: 1),
                 const ButtonsAbilities(),
               ],
@@ -87,22 +92,6 @@ class HomePage extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class GridMap extends StatelessWidget {
-  final List<String> objects;
-  const GridMap({
-    super.key,
-    required this.objects,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return InteractiveViewer(
-      boundaryMargin: const EdgeInsets.all(100),
-      child: const Placeholder(),
     );
   }
 }
@@ -173,59 +162,6 @@ class HomeDrawer extends StatelessWidget {
             ],
           ),
         ],
-      ),
-    );
-  }
-}
-
-class ButtonsAbilities extends StatelessWidget {
-  static const double _padding = 16;
-  const ButtonsAbilities({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        SquareButton(Icons.star),
-        SizedBox(width: _padding),
-        SquareButton(Icons.star),
-        SizedBox(width: _padding),
-        SquareButton(Icons.star),
-        SizedBox(width: _padding),
-        SquareButton(Icons.star),
-      ],
-    );
-  }
-}
-
-class SquareButton extends StatelessWidget {
-  static const double _size = 56;
-
-  final IconData _icon;
-  final Function()? _onPressed;
-
-  const SquareButton(
-    IconData icon, {
-    super.key,
-    Function()? onPressed,
-  })  : _icon = icon,
-        _onPressed = onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        padding: const EdgeInsets.all(0),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-        ),
-      ),
-      onPressed: _onPressed,
-      child: SizedBox(
-        width: _size,
-        height: _size,
-        child: Center(child: Icon(_icon)),
       ),
     );
   }
