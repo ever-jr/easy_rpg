@@ -1,0 +1,16 @@
+{
+    "sheet": [
+        {
+            "title": "Icon",
+            "type": "icon",
+            "placeholder": "💀"
+        },
+        {
+            "title": "Name",
+            "type": "text",
+            "placeholder": "Your Character's Name"
+        },
+        {
+        }
+    ]
+}

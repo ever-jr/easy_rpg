@@ -1,3 +1,4 @@
+import 'package:easy_rpg/src/pages/character_page.dart';
 import 'package:easy_rpg/src/pages/chat_page.dart';
 import 'package:easy_rpg/src/pages/home_page.dart';
 import 'package:easy_rpg/src/pages/items_page.dart';
@@ -74,14 +75,22 @@ class MyApp extends StatelessWidget {
                 switch (routeSettings.name) {
                   case HomePage.routeName:
                     return const HomePage();
+
                   case ChatPage.routeName:
                     return const ChatPage();
+
                   case ItemsPage.routeName:
                     return const ItemsPage();
+
+                  case CharacterPage.routeName:
+                    return const CharacterPage();
+
                   case SettingsView.routeName:
                     return SettingsView(controller: settingsController);
+
                   case SampleItemDetailsView.routeName:
                     return const SampleItemDetailsView();
+
                   case SampleItemListView.routeName:
                   default:
                     return const HomePage();

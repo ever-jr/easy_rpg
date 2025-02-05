@@ -1,3 +1,5 @@
+import 'package:easy_rpg/src/pages/character_page.dart';
+import 'package:easy_rpg/src/parser/cartography.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_rpg/src/components/map.dart';
 import 'package:easy_rpg/src/components/search.dart';
@@ -6,17 +8,7 @@ import 'package:easy_rpg/src/pages/chat_page.dart';
 import 'package:easy_rpg/src/pages/items_page.dart';
 import 'package:easy_rpg/src/components/player/buttons_abilities.dart';
 import 'package:easy_rpg/src/settings/settings_view.dart';
-import 'package:easy_rpg/src/parser/string_parsing.dart';
 
-
-const String map =
-"""
-t__t_
-_t___
-t___x
-t__t_
-__t__
-""";
 
 class HomePage extends StatelessWidget {
   static const routeName = '/home';
@@ -53,11 +45,18 @@ class HomePage extends StatelessWidget {
               },
             ),
             const SizedBox(height: _padding),
-            const SquareButton(Icons.book),
+            SquareButton(
+              Icons.book,
+              onPressed: () {
+                Navigator.restorablePushNamed(context, CharacterPage.routeName);
+              },
+            ),
           ],
         ),
       ],
     );
+
+    final gridMap = GridMap(elements: Cartography.dataIntoList(mapExample));
 
     return Scaffold(
       appBar: AppBar(
@@ -79,7 +78,13 @@ class HomePage extends StatelessWidget {
         padding: const EdgeInsets.all(24),
         child: Stack(
           children: [
-            GridMap(objects: StringParsing.parseTextIntoMapObjects(map)),
+            InteractiveViewer(
+              boundaryMargin: EdgeInsets.all(gridMap.size.height),
+              constrained: true,
+              child: Center(
+                child: gridMap,
+              ),
+            ),
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
