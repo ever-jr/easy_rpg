@@ -1,7 +1,12 @@
+import 'package:easy_rpg/models/player.dart';
+import 'package:easy_rpg/src/components/map.dart';
+import 'package:easy_rpg/src/data/character_properties.dart';
 import 'package:easy_rpg/src/pages/character_page.dart';
 import 'package:easy_rpg/src/pages/chat_page.dart';
-import 'package:easy_rpg/src/pages/home_page.dart';
+import 'package:easy_rpg/src/pages/login_page.dart';
+import 'package:easy_rpg/src/pages/world_map_page.dart';
 import 'package:easy_rpg/src/pages/items_page.dart';
+import 'package:easy_rpg/src/parser/cartography.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -12,13 +17,23 @@ import 'settings/settings_controller.dart';
 import 'settings/settings_view.dart';
 
 /// The Widget that configures your application.
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({
     super.key,
     required this.settingsController,
+    required this.characterProperties,
   });
 
   final SettingsController settingsController;
+
+  final CharacterProperties characterProperties;
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final playerNotifier = PlayerNotifier();
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +42,7 @@ class MyApp extends StatelessWidget {
     // The ListenableBuilder Widget listens to the SettingsController for changes.
     // Whenever the user updates their settings, the MaterialApp is rebuilt.
     return ListenableBuilder(
-      listenable: settingsController,
+      listenable: widget.settingsController,
       builder: (BuildContext context, Widget? child) {
         return MaterialApp(
           // Providing a restorationScopeId allows the Navigator built by the
@@ -64,7 +79,7 @@ class MyApp extends StatelessWidget {
           // SettingsController to display the correct theme.
           theme: ThemeData(),
           darkTheme: ThemeData.dark(),
-          themeMode: settingsController.themeMode,
+          themeMode: widget.settingsController.themeMode,
 
           // Define a function to handle named routes in order to support
           // Flutter web url navigation and deep linking.
@@ -73,9 +88,6 @@ class MyApp extends StatelessWidget {
               settings: routeSettings,
               builder: (BuildContext context) {
                 switch (routeSettings.name) {
-                  case HomePage.routeName:
-                    return const HomePage();
-
                   case ChatPage.routeName:
                     return const ChatPage();
 
@@ -83,17 +95,32 @@ class MyApp extends StatelessWidget {
                     return const ItemsPage();
 
                   case CharacterPage.routeName:
-                    return const CharacterPage();
+                    return CharacterPage(
+                        characterProperties: widget.characterProperties);
 
                   case SettingsView.routeName:
-                    return SettingsView(controller: settingsController);
+                    return SettingsView(controller: widget.settingsController);
 
                   case SampleItemDetailsView.routeName:
                     return const SampleItemDetailsView();
 
                   case SampleItemListView.routeName:
+                  case WorldMapPage.routeName:
                   default:
-                    return const HomePage();
+                    return ListenableBuilder(
+                      listenable: playerNotifier,
+                      builder: (BuildContext context, Widget? child) {
+                        if (!playerNotifier.isLoggedIn) {
+                          return LoginPage(playerNotifier: playerNotifier);
+                        }
+
+                        return WorldMapPage(
+                          map: GridMap(
+                            elements: Cartography.dataIntoList(mapExample),
+                          ),
+                        );
+                      },
+                    );
                 }
               },
             );

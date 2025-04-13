@@ -1,5 +1,5 @@
+import 'package:easy_rpg/data/rpg_database.dart';
 import 'package:easy_rpg/src/pages/character_page.dart';
-import 'package:easy_rpg/src/parser/cartography.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_rpg/src/components/map.dart';
 import 'package:easy_rpg/src/components/search.dart';
@@ -10,11 +10,13 @@ import 'package:easy_rpg/src/components/player/buttons_abilities.dart';
 import 'package:easy_rpg/src/settings/settings_view.dart';
 
 
-class HomePage extends StatelessWidget {
+class WorldMapPage extends StatelessWidget {
   static const routeName = '/home';
   static const double _padding = 16;
 
-  const HomePage({super.key});
+  final GridMap map;
+
+  const WorldMapPage({required this.map, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -56,8 +58,6 @@ class HomePage extends StatelessWidget {
       ],
     );
 
-    final gridMap = GridMap(elements: Cartography.dataIntoList(mapExample));
-
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -79,10 +79,11 @@ class HomePage extends StatelessWidget {
         child: Stack(
           children: [
             InteractiveViewer(
-              boundaryMargin: EdgeInsets.all(gridMap.size.height),
+              boundaryMargin: EdgeInsets.all(map.realSize.height),
               constrained: true,
               child: Center(
-                child: gridMap,
+                child: map,
+                //child: _DatabaseTest(),
               ),
             ),
             Column(
@@ -169,5 +170,36 @@ class HomeDrawer extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class _DatabaseTest extends StatefulWidget {
+  const _DatabaseTest();
+
+  @override
+  State<_DatabaseTest> createState() => _DatabaseTestState();
+}
+
+class _DatabaseTestState extends State<_DatabaseTest> {
+  List<PlayerData>? players;
+
+  @override
+  void initState() {
+    super.initState();
+
+    RpgDatabase.fetchPlayersData().then((data) {
+      setState(() {
+        players = data;
+      });
+    }).catchError((error) {
+      print(error);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return players == null
+        ? const CircularProgressIndicator()
+        : Text(players.toString());
   }
 }

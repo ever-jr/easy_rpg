@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "209078527561",
+    "firebase_url": "https://easy-rpg-ever-default-rtdb.firebaseio.com",
+    "project_id": "easy-rpg-ever",
+    "storage_bucket": "easy-rpg-ever.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:209078527561:android:0bc75c2d218ab7b43c0198",
+        "android_client_info": {
+          "package_name": "com.example.easy_rpg"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtK2A6VjEVvH08TvAb9XbHgagUlCWrrGk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:209078527561:android:71d919abfb2380223c0198",
+        "android_client_info": {
+          "package_name": "com.orangejuice.easy_rpg"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtK2A6VjEVvH08TvAb9XbHgagUlCWrrGk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

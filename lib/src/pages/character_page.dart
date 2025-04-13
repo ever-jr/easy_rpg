@@ -1,28 +1,86 @@
+import 'package:easy_rpg/src/data/character_properties.dart';
 import 'package:easy_rpg/src/settings/color_palette.dart';
 import 'package:flutter/material.dart';
 
+const characterSheetData = {
+  "type": "sheet",
+  "content": [
+    {
+      "name": "level",
+      "type": "number",
+      "size": 0,
+      "value": 1
+    },
+    {
+      "name": "class",
+      "type": "text",
+      "size": 1,
+      "value": "warrior"
+    },
+
+    {
+      "name": "health",
+      "type": "text",
+      "size": 1,
+      "value": 9
+    },
+
+    {
+      "name": "max_health",
+      "type": "text",
+      "size": 1,
+      "value": 10
+    },
+
+    {
+      "name": "health_bar",
+      "type": "text",
+      "size": 1,
+      "value": "{health}/{max_health}",
+      "readonly": true
+    },
+
+    {
+      "name": "dexterity",
+      "type": "number",
+      "size": 0,
+      "value": 12
+    },
+    {
+      "name": "strength",
+      "type": "number",
+      "size": 0,
+      "value": 8
+    },
+    {
+      "name": "intelligence",
+      "type": "number",
+      "size": 0,
+      "value": 16 
+    },
+  ]
+};
+
+
+enum SheetInputType {
+  small, medium, big
+}
+
 class CharacterPage extends StatefulWidget {
   static const String routeName = '/character';
+  final CharacterProperties characterProperties;
 
-  const CharacterPage({super.key});
+  const CharacterPage({super.key, required this.characterProperties});
 
   @override
   State<CharacterPage> createState() => _CharacterPageState();
 }
 
 class _CharacterPageState extends State<CharacterPage> {
-  final iconController = TextEditingController();
-  final nameController = TextEditingController();
-  final levelController = TextEditingController();
-  final playerController = TextEditingController();
+  bool isEditing = false;
 
   @override
   Widget build(BuildContext context) {
-    iconController.text = "💀";
-    nameController.text = "Skull Schoolar";
-    levelController.text = "1";
-    playerController.text = "Little Jonas";
-
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -32,119 +90,86 @@ class _CharacterPageState extends State<CharacterPage> {
           ),
         ],
       ),
-      body: SizedBox(
-        height: double.infinity,
-        child: Padding(
-          padding: const EdgeInsets.all(24),
-          child: Card(
-            color: ColorPalette.lessDark,
-            child: Wrap(
-              alignment: WrapAlignment.spaceBetween,
-              spacing: 12.0,
-              children: [
-                SheetInput(
-                  title: "Icon",
-                  controller: iconController,
-                  width: 100,
-                  textAlign: TextAlign.center,
-                ),
-                SheetInput(
-                  title: "Name",
-                  controller: nameController,
-                  width: 480,
-                ),
-                SheetInput(
-                  title: "Level",
-                  controller: levelController,
-                  width: 100,
-                  textAlign: TextAlign.center,
-                ),
-                SheetInput(
-                  title: "Player",
-                  controller: playerController,
-                  width: 480,
-                ),
-                const SheetAddInputButton(),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class SheetInput extends StatelessWidget {
-  static const double _padding = 8.0;
-
-  final String title;
-  final TextEditingController controller;
-  final double width;
-  final TextAlign textAlign;
-
-  const SheetInput({
-    super.key,
-    required this.title,
-    required this.controller,
-    this.width = double.infinity,
-    this.textAlign = TextAlign.left,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: _padding),
-          child: Text(
-            title,
-            style: const TextStyle(color: ColorPalette.light),
-          ),
-        ),
-        SizedBox(
-          width: width,
-          child: Card(
-            color: ColorPalette.dark,
-            child: Padding(
-              padding: const EdgeInsets.all(_padding),
-              child: TextField(
-                controller: controller,
-                textAlign: textAlign,
-                decoration: const InputDecoration(border: InputBorder.none),
+      body: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: SizedBox(
+          height: double.infinity,
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Switch(
+                    value: isEditing,
+                    onChanged: (bool newValue) {
+                      setState(() {
+                        isEditing = !isEditing;
+                      });
+                    },
+                  ),
+                  Text(isEditing ? "Editing" : ""),
+                ],
               ),
-            ),
+              Expanded(
+                child: SizedBox(
+                  width: double.infinity,
+                  child: Card(
+                    color: ColorPalette.lessDark,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: !isEditing
+                          ? _NormalCharacterSheet(properties: widget.characterProperties)
+                          : Container(
+                              color: Colors.red,
+                              child: const Placeholder(),
+                            ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
-      ],
+      ),
     );
   }
 }
 
+class _NormalCharacterSheet extends StatelessWidget {
+  final CharacterProperties properties;
 
-class SheetAddInputButton extends StatelessWidget {
-  const SheetAddInputButton({
-    super.key,
-  });
+  const _NormalCharacterSheet({required this.properties});
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: ElevatedButton(
-        onPressed: () {},
-        style: ElevatedButton.styleFrom(
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(8)),
+    return Wrap(
+      children: List.generate(properties.length, (int index) {
+        final CharacterProperty prop = properties.at(index);
+        return Padding(
+          padding: EdgeInsets.only(
+            right: index < properties.length - 1
+              ? 8.0
+              : 0.0,
           ),
-          backgroundColor: ColorPalette.light,
-          foregroundColor: ColorPalette.lessDark,
-          minimumSize: const Size.fromHeight(64),
-        ),
-        child: const Icon(Icons.add),
-      ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text("${prop.name}: "),
+              ConstrainedBox(
+                constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
+                child: Card(
+                  color: Colors.black38,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Center(
+                      child: Text(prop.value.toString()),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      }),
     );
   }
 }
