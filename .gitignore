@@ -3,3 +3,5 @@
 /android/
 
 *.gd.uid
+
+config/auth.cfg
