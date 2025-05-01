@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=3 uid="uid://cx228rkn7b5nq"]
+
+[ext_resource type="Script" uid="uid://bcxphqxqtb8s2" path="res://scenes/models/basic_info_button.gd" id="1_monjr"]
+[ext_resource type="Script" uid="uid://c383fyaetbc0r" path="res://resources/models/basic_info.gd" id="2_manuc"]
+
+[sub_resource type="Resource" id="Resource_manuc"]
+script = ExtResource("2_manuc")
+display_name = "[EmptyName]"
+icon = "👤"
+metadata/_custom_type_script = "uid://c383fyaetbc0r"
+
+[node name="BasicInfoButton" type="Button"]
+custom_minimum_size = Vector2(48, 48)
+offset_right = 48.0
+offset_bottom = 48.0
+script = ExtResource("1_monjr")
+info = SubResource("Resource_manuc")
+
+[node name="LabelIcon" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -11.0
+offset_top = -11.5
+offset_right = 11.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "👤"
