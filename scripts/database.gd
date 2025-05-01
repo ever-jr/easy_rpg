@@ -3,9 +3,11 @@ extends Node
 # URLs
 const DATABASE_URL_ROOT: String = "https://easy-rpg-ever-default-rtdb.firebaseio.com"
 const DATABASE_URL_PLAYERS: String = DATABASE_URL_ROOT + "/players"
+
 const DATABASE_URL_SIGN_UP_WITHOUT_KEY: String = "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key="
 const DATABASE_URL_SIGN_IN_WITHOUT_KEY: String = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key="
 
+# KEYS
 var database_api_key: String = ""
     
 
@@ -16,10 +18,10 @@ func _ready() -> void:
 
     if err == OK:
         database_api_key = config.get_value("keys", "web_api_key", "")
-        print("loaded token: ", database_api_key)
+        print("loaded api token successfuly!")
 
     else:
-        print("failed to load token")
+        push_warning("failed to load api token.")
 
 
 ## Create an account.
