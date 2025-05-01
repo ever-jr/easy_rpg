@@ -2,6 +2,8 @@
 .godot/
 /android/
 
+# temp files
 *.gd.uid
 
+# auth keys
 config/auth.cfg
