@@ -85,9 +85,9 @@ func _on_http_request_completed(result: int, response_code: int, _headers: Packe
 
     var data: Dictionary = JSON.parse_string(body.get_string_from_utf8())
     if response_code == 200:
-        var user_data: Dictionary = DatabaseParser.sign_in_response_body_to_user_data(body)
+        var user_data: SignUserData = DatabaseParser.sign_response_body_to_data(body)
 
-        LoggedUser.login(user_data["email"], user_data["id"])
+        LoggedUser.login(user_data)
         if LoggedUser.is_logged():
             var home_page_path: String = "res://scenes/pages/home_page.tscn"
             get_tree().change_scene_to_file(home_page_path)

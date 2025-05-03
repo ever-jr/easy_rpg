@@ -1,4 +1,9 @@
-class_name HomePage
 extends Control
 
-static var path: String = "res://scenes/pages/home_page.tscn"
+
+@onready var label_stats: Label = %LabelStats
+
+
+func _on_timer_timeout() -> void:
+    print("updating stats...")
+    print("access token: ", LoggedUser.access_token)

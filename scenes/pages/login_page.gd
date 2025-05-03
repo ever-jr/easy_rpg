@@ -23,14 +23,14 @@ func _on_login_request_request_completed(result: int, response_code: int, _heade
         [response_code, result]))
     
     if response_code == 200:
-        var user_data: Dictionary = DatabaseParser.sign_in_response_body_to_user_data(body)
+        var user_data: SignUserData = DatabaseParser.sign_response_body_to_data(body)
 
         print("User data:\nEmail: {email}\nID token: {id}".format({
             "email": user_data.email,
             "id": user_data.id,
         }))
 
-        LoggedUser.login(user_data.email, user_data.id)
+        LoggedUser.login(user_data)
 
         if LoggedUser.is_logged():
             var home_page_path: String = "res://scenes/pages/home_page.tscn"

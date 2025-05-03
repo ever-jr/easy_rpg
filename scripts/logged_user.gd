@@ -1,17 +1,29 @@
 extends Node
 
-var email: String = ""
-var access_token: String = ""
+# PRIVATE PROPERTIES
+var _sign_user_data: SignUserData = null
+
+# GETTERS
+var email: String:
+    get(): return _sign_user_data.email
+
+var access_token: String:
+    get(): return _sign_user_data.auth_token
+
+var unique_id: String:
+    get(): return _sign_user_data.id
 
 
+# METHODS
 func is_logged() -> bool:
-    return not email.is_empty() and not access_token.is_empty()
+    return _sign_user_data != null
+
     
-func login(in_username: String, in_access_token: String) -> void:
+func login(in_sign_user_data: SignUserData) -> void:
     if not is_logged():
-        email = in_username
-        access_token = in_access_token
+        _sign_user_data = in_sign_user_data
+
 
 func logout() -> void:
-    email = ""
-    access_token = ""
+    _sign_user_data.free()
+    _sign_user_data = null
