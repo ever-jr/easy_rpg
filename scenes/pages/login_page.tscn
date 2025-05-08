@@ -88,6 +88,17 @@ text = "Login"
 label_settings = ExtResource("3_2fks1")
 horizontal_alignment = 1
 
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="CheckBoxRememberCredentials" type="CheckBox" parent="Panel/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Remember credentials?"
+
 [node name="HSeparator2" type="HSeparator" parent="Panel/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 12
@@ -130,5 +141,6 @@ horizontal_alignment = 1
 unique_name_in_owner = true
 
 [connection signal="pressed" from="Panel/VBoxContainer/ButtonLogIn" to="." method="_on_button_login_pressed"]
+[connection signal="toggled" from="Panel/VBoxContainer/HBoxContainer/CheckBoxRememberCredentials" to="." method="_on_check_box_remember_credentials_toggled"]
 [connection signal="pressed" from="Panel/VBoxContainer/ButtonSignIn" to="." method="_on_button_sign_in_pressed"]
 [connection signal="request_completed" from="LoginRequest" to="." method="_on_login_request_request_completed"]

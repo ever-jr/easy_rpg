@@ -5,6 +5,24 @@ extends Control
 @onready var login_request: HTTPRequest = %LoginRequest
 
 
+
+func _ready() -> void:
+    var remember_credentials: bool = Settings.remember_credentials
+    (%CheckBoxRememberCredentials as CheckBox).button_pressed = remember_credentials
+
+    if LoggedUser.is_logged():
+        print("already logged, entering...")
+
+        Database.sign_in_with_token(login_request, LoggedUser.refresh_token)
+
+    elif remember_credentials:
+        print("remembering credentials but credentials saved not found.")
+
+
+func _on_check_box_remember_credentials_toggled(toggled_on: bool) -> void:
+    Settings.remember_credentials = toggled_on
+
+
 func _on_button_login_pressed() -> void:
     var email: String = input_email.text
     var password: String = input_password.text
@@ -18,17 +36,12 @@ func _on_button_sign_in_pressed() -> void:
     get_tree().change_scene_to_file(signin_page_path)
 
 
-func _on_login_request_request_completed(result: int, response_code: int, _headers: PackedStringArray, body: PackedByteArray) -> void:
-    print("response code: {0} | result: {1}".format(
-        [response_code, result]))
+func _on_login_request_request_completed(_result: int, response_code: int, _headers: PackedStringArray, body: PackedByteArray) -> void:
+    print("response code: {0}\nbody: {1}".format(
+        [response_code, body.get_string_from_utf8()]))
     
     if response_code == 200:
         var user_data: SignUserData = DatabaseParser.sign_response_body_to_data(body)
-
-        print("User data:\nEmail: {email}\nID token: {id}".format({
-            "email": user_data.email,
-            "id": user_data.id,
-        }))
 
         LoggedUser.login(user_data)
 

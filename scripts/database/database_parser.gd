@@ -5,10 +5,6 @@ extends Node
 static func sign_response_body_to_data(body: PackedByteArray) -> SignUserData:
     var data: Dictionary = JSON.parse_string(body.get_string_from_utf8())
 
-    if not data.has("email"):
-        push_warning("sign response has no 'email' key")
-        return null
-
     if not data.has("idToken"):
         push_warning("sign response has no 'idToken' key")
         return null
@@ -17,8 +13,12 @@ static func sign_response_body_to_data(body: PackedByteArray) -> SignUserData:
         push_warning("sign response has no 'localId' key")
         return null
 
-    var email: String = data["email"]
+    if not data.has("refreshToken"):
+        push_warning("sign response has no 'refreshToken' key")
+        return null
+
     var id: String = data["localId"]
     var auth_token: String = data["idToken"]
+    var refresh_token: String = data["refreshToken"]
 
-    return SignUserData.new(email, id, auth_token)
+    return SignUserData.new(id, auth_token, refresh_token)

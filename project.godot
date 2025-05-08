@@ -17,8 +17,9 @@ config/icon="res://assets/icon.svg"
 
 [autoload]
 
-LoggedUser="*res://scripts/logged_user.gd"
+Settings="*res://scripts/settings.gd"
 Database="*res://scripts/database/database.gd"
+LoggedUser="*res://scripts/logged_user.gd"
 
 [display]
 
