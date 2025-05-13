@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="SheetPropertyData" load_steps=2 format=3 uid="uid://odmct4e3gyw7"]
+
+[ext_resource type="Script" uid="uid://bvkbu4xukmp06" path="res://scenes/components/sheet/sheet_property_data.gd" id="1_sgmcb"]
+
+[resource]
+script = ExtResource("1_sgmcb")
+title = "name"
+value = "Character's name"
+type = 0
+size = 1
+metadata/_custom_type_script = "uid://bvkbu4xukmp06"

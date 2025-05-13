@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="SheetPropertyData" load_steps=2 format=3 uid="uid://p7mllr216j7k"]
+
+[ext_resource type="Script" uid="uid://bvkbu4xukmp06" path="res://scenes/components/sheet/sheet_property_data.gd" id="1_bsb06"]
+
+[resource]
+script = ExtResource("1_bsb06")
+title = "icon"
+value = "👤"
+type = 0
+size = 0
+metadata/_custom_type_script = "uid://bvkbu4xukmp06"

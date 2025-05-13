@@ -9,7 +9,7 @@ func _ready() -> void:
     Database.fetch_campaigns($HTTPRequest, LoggedUser.access_token)
 
 
-func _on_http_request_request_completed(result:int, response_code:int, headers:PackedStringArray, body:PackedByteArray) -> void:
+func _on_http_request_request_completed(_result: int, response_code: int, _headers: PackedStringArray, body: PackedByteArray) -> void:
     if response_code == 200:
         var campaigns: Array = JSON.parse_string(body.get_string_from_utf8())
 
@@ -21,3 +21,7 @@ func _on_http_request_request_completed(result:int, response_code:int, headers:P
 
 func _on_http_request_property_list_changed() -> void:
     print("property changed!")
+
+
+func _on_button_settings_button_down() -> void:
+    get_tree().change_scene_to_file("res://scenes/pages/sheet_setup_page.tscn")

@@ -1,0 +1,65 @@
+[gd_resource type="Resource" script_class="SheetData" load_steps=10 format=3 uid="uid://brhmq0gpq31p5"]
+
+[ext_resource type="Script" uid="uid://bvkbu4xukmp06" path="res://scenes/components/sheet/sheet_property_data.gd" id="1_qhyis"]
+[ext_resource type="Script" uid="uid://vvyu3evmy7ev" path="res://scenes/components/sheet/sheet_data.gd" id="2_5m13s"]
+
+[sub_resource type="Resource" id="Resource_40yag"]
+script = ExtResource("1_qhyis")
+title = "level"
+value = "1"
+type = 1
+size = 0
+metadata/_custom_type_script = "uid://bvkbu4xukmp06"
+
+[sub_resource type="Resource" id="Resource_msxgw"]
+script = ExtResource("1_qhyis")
+title = "exp."
+value = "0"
+type = 1
+size = 0
+metadata/_custom_type_script = "uid://bvkbu4xukmp06"
+
+[sub_resource type="Resource" id="Resource_wwn0v"]
+script = ExtResource("1_qhyis")
+title = "total exp."
+value = "50"
+type = 1
+size = 0
+metadata/_custom_type_script = "uid://bvkbu4xukmp06"
+
+[sub_resource type="Resource" id="Resource_qhyis"]
+script = ExtResource("1_qhyis")
+title = "strength"
+value = "3"
+type = 1
+size = 0
+metadata/_custom_type_script = "uid://bvkbu4xukmp06"
+
+[sub_resource type="Resource" id="Resource_5m13s"]
+script = ExtResource("1_qhyis")
+title = "dexterity"
+value = "4"
+type = 1
+size = 0
+metadata/_custom_type_script = "uid://bvkbu4xukmp06"
+
+[sub_resource type="Resource" id="Resource_a7yrv"]
+script = ExtResource("1_qhyis")
+title = "intelligence"
+value = "2"
+type = 1
+size = 0
+metadata/_custom_type_script = "uid://bvkbu4xukmp06"
+
+[sub_resource type="Resource" id="Resource_jd8nj"]
+script = ExtResource("1_qhyis")
+title = "gold"
+value = "10"
+type = 1
+size = 0
+metadata/_custom_type_script = "uid://bvkbu4xukmp06"
+
+[resource]
+script = ExtResource("2_5m13s")
+properties = Array[ExtResource("1_qhyis")]([SubResource("Resource_40yag"), SubResource("Resource_msxgw"), SubResource("Resource_wwn0v"), SubResource("Resource_qhyis"), SubResource("Resource_5m13s"), SubResource("Resource_a7yrv"), SubResource("Resource_jd8nj")])
+metadata/_custom_type_script = "uid://vvyu3evmy7ev"

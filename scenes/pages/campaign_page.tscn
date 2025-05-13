@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://dlm1waxd36ccm"]
+[gd_scene load_steps=4 format=3 uid="uid://dlm1waxd36ccm"]
 
 [ext_resource type="Script" uid="uid://bsyklw60uad4p" path="res://scenes/pages/campaign_page.gd" id="1_n4whh"]
+[ext_resource type="PackedScene" uid="uid://bksmpv1hw7cqu" path="res://scenes/components/map_grid/map_grid.tscn" id="2_cltbf"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n4whh"]
 
@@ -79,10 +80,19 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="GridContainer" type="GridContainer" parent="Panel/VBoxContainer/Content/Panel"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="MapGrid" parent="Panel/VBoxContainer/Content/Panel" instance=ExtResource("2_cltbf")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -49.0
+offset_top = -50.5
+offset_right = 49.0
+offset_bottom = 50.5
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="ButtonStatus" type="Button" parent="Panel/VBoxContainer/Content"]
 custom_minimum_size = Vector2(80, 80)
@@ -100,5 +110,6 @@ text = "👤"
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 
+[connection signal="button_down" from="Panel/VBoxContainer/HBoxContainer/ButtonSettings" to="." method="_on_button_settings_button_down"]
 [connection signal="property_list_changed" from="HTTPRequest" to="." method="_on_http_request_property_list_changed"]
 [connection signal="request_completed" from="HTTPRequest" to="." method="_on_http_request_request_completed"]

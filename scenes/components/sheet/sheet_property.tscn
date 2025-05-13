@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://b66d7y1yt2tx8"]
+
+[ext_resource type="Script" uid="uid://cjg3i5u5ft8vv" path="res://scenes/components/sheet/sheet_property.gd" id="1_xcnym"]
+[ext_resource type="Script" uid="uid://bvkbu4xukmp06" path="res://scenes/components/sheet/sheet_property_data.gd" id="2_8e13d"]
+[ext_resource type="Theme" uid="uid://c2xr6r63eocms" path="res://resources/sheet/sheet_property_input_medium.tres" id="3_ryanv"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1nfm1"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+
+[sub_resource type="Resource" id="Resource_8e13d"]
+script = ExtResource("2_8e13d")
+title = "[PropertyName]"
+value = "[Value]"
+type = 1
+size = 1
+metadata/_custom_type_script = "uid://bvkbu4xukmp06"
+
+[node name="SheetProperty" type="PanelContainer"]
+offset_right = 125.0
+offset_bottom = 58.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_1nfm1")
+script = ExtResource("1_xcnym")
+data = SubResource("Resource_8e13d")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "[PropertyName]"
+
+[node name="Input" type="LineEdit" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("3_ryanv")
+text = "[Value]"
