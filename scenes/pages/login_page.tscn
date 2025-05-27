@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://cfv7vcjqke5hf"]
 
-[ext_resource type="Script" uid="uid://cdj47vypidhxy" path="res://scenes/pages/login_page.gd" id="1_5t3qa"]
+[ext_resource type="Script" uid="uid://dsyppmxu80lki" path="res://scenes/pages/login_page.gd" id="1_5t3qa"]
 [ext_resource type="LabelSettings" uid="uid://28dnpigccebq" path="res://resources/label_title.tres" id="2_q6f0t"]
 [ext_resource type="LabelSettings" uid="uid://brby6v3ibjrh8" path="res://resources/label_normal.tres" id="3_2fks1"]
 

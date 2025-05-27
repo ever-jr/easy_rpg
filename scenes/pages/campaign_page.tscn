@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://dlm1waxd36ccm"]
 
-[ext_resource type="Script" uid="uid://bsyklw60uad4p" path="res://scenes/pages/campaign_page.gd" id="1_n4whh"]
+[ext_resource type="Script" uid="uid://cb2cy3btwrk7d" path="res://scenes/pages/campaign_page.gd" id="1_n4whh"]
 [ext_resource type="PackedScene" uid="uid://bksmpv1hw7cqu" path="res://scenes/components/map_grid/map_grid.tscn" id="2_cltbf"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n4whh"]
@@ -80,19 +80,84 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MapGrid" parent="Panel/VBoxContainer/Content/Panel" instance=ExtResource("2_cltbf")]
+[node name="VBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer/Content/Panel"]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -49.0
-offset_top = -50.5
-offset_right = 49.0
-offset_bottom = 50.5
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Panel/VBoxContainer/Content/Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="ReferenceRect2" type="ReferenceRect" parent="Panel/VBoxContainer/Content/Panel/VBoxContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+border_color = Color(0.385492, 0.385493, 0.385493, 1)
+border_width = 2.0
+
+[node name="ButtonDecrementGridWidth" type="Button" parent="Panel/VBoxContainer/Content/Panel/VBoxContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+size_flags_vertical = 6
+text = "-"
+
+[node name="ReferenceRect" type="ReferenceRect" parent="Panel/VBoxContainer/Content/Panel/VBoxContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+border_color = Color(0.385492, 0.385493, 0.385493, 1)
+border_width = 2.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/VBoxContainer/Content/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ButtonIncrementGridHeight" type="Button" parent="Panel/VBoxContainer/Content/Panel/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "+"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/VBoxContainer/Content/Panel/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MapGrid" parent="Panel/VBoxContainer/Content/Panel/VBoxContainer/VBoxContainer/ScrollContainer" instance=ExtResource("2_cltbf")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+
+[node name="ButtonDecrementGridHeight" type="Button" parent="Panel/VBoxContainer/Content/Panel/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "-"
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="Panel/VBoxContainer/Content/Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="ReferenceRect2" type="ReferenceRect" parent="Panel/VBoxContainer/Content/Panel/VBoxContainer/VBoxContainer3"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+border_color = Color(0.385492, 0.385493, 0.385493, 1)
+border_width = 2.0
+
+[node name="ButtonIncrementGridWidth" type="Button" parent="Panel/VBoxContainer/Content/Panel/VBoxContainer/VBoxContainer3"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+size_flags_vertical = 6
+text = "+
+"
+
+[node name="ReferenceRect" type="ReferenceRect" parent="Panel/VBoxContainer/Content/Panel/VBoxContainer/VBoxContainer3"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+border_color = Color(0.385492, 0.385493, 0.385493, 1)
+border_width = 2.0
 
 [node name="ButtonStatus" type="Button" parent="Panel/VBoxContainer/Content"]
 custom_minimum_size = Vector2(80, 80)
@@ -111,5 +176,9 @@ text = "👤"
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 
 [connection signal="button_down" from="Panel/VBoxContainer/HBoxContainer/ButtonSettings" to="." method="_on_button_settings_button_down"]
+[connection signal="button_down" from="Panel/VBoxContainer/Content/Panel/VBoxContainer/VBoxContainer2/ButtonDecrementGridWidth" to="." method="_on_button_decrement_grid_width_button_down"]
+[connection signal="button_down" from="Panel/VBoxContainer/Content/Panel/VBoxContainer/VBoxContainer/ButtonIncrementGridHeight" to="." method="_on_button_increment_grid_height_button_down"]
+[connection signal="button_down" from="Panel/VBoxContainer/Content/Panel/VBoxContainer/VBoxContainer/ButtonDecrementGridHeight" to="." method="_on_button_decrement_grid_height_button_down"]
+[connection signal="button_down" from="Panel/VBoxContainer/Content/Panel/VBoxContainer/VBoxContainer3/ButtonIncrementGridWidth" to="." method="_on_button_increment_grid_width_button_down"]
 [connection signal="property_list_changed" from="HTTPRequest" to="." method="_on_http_request_property_list_changed"]
 [connection signal="request_completed" from="HTTPRequest" to="." method="_on_http_request_request_completed"]

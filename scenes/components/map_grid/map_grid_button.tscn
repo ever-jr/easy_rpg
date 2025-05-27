@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://beta06mnd0clm"]
+
+[ext_resource type="Script" uid="uid://vjsgb4tsludw" path="res://scenes/components/map_grid/map_grid_button.gd" id="1_cvh0b"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_b02rw"]
+
+[node name="MapGridButton" type="PanelContainer" node_paths=PackedStringArray("target")]
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_b02rw")
+script = ExtResource("1_cvh0b")
+target = NodePath("")
+
+[node name="Button" type="Button" parent="."]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+text = "👤"

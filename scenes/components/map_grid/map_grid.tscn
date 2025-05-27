@@ -1,4 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://bksmpv1hw7cqu"]
+[gd_scene load_steps=4 format=3 uid="uid://bksmpv1hw7cqu"]
+
+[ext_resource type="PackedScene" uid="uid://beta06mnd0clm" path="res://scenes/components/map_grid/map_grid_button.tscn" id="1_b8dkn"]
+[ext_resource type="Script" uid="uid://1do8l7hlyg0c" path="res://scenes/components/map_grid/map_grid.gd" id="1_e74ws"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yfgga"]
 
@@ -6,43 +9,36 @@
 offset_right = 98.0
 offset_bottom = 101.0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_yfgga")
+script = ExtResource("1_e74ws")
 
 [node name="GridContainer" type="GridContainer" parent="."]
+unique_name_in_owner = true
 layout_mode = 2
 columns = 3
 
-[node name="Button" type="Button" parent="GridContainer"]
-custom_minimum_size = Vector2(48, 48)
+[node name="Button" parent="GridContainer" instance=ExtResource("1_b8dkn")]
 layout_mode = 2
 
-[node name="Button2" type="Button" parent="GridContainer"]
-custom_minimum_size = Vector2(48, 48)
+[node name="Button2" parent="GridContainer" instance=ExtResource("1_b8dkn")]
 layout_mode = 2
 
-[node name="Button3" type="Button" parent="GridContainer"]
-custom_minimum_size = Vector2(48, 48)
+[node name="Button3" parent="GridContainer" instance=ExtResource("1_b8dkn")]
 layout_mode = 2
 
-[node name="Button4" type="Button" parent="GridContainer"]
-custom_minimum_size = Vector2(48, 48)
+[node name="Button4" parent="GridContainer" instance=ExtResource("1_b8dkn")]
 layout_mode = 2
 
-[node name="Button5" type="Button" parent="GridContainer"]
-custom_minimum_size = Vector2(48, 48)
+[node name="Button5" parent="GridContainer" instance=ExtResource("1_b8dkn")]
 layout_mode = 2
 
-[node name="Button6" type="Button" parent="GridContainer"]
-custom_minimum_size = Vector2(48, 48)
+[node name="Button6" parent="GridContainer" instance=ExtResource("1_b8dkn")]
 layout_mode = 2
 
-[node name="Button7" type="Button" parent="GridContainer"]
-custom_minimum_size = Vector2(48, 48)
+[node name="Button7" parent="GridContainer" instance=ExtResource("1_b8dkn")]
 layout_mode = 2
 
-[node name="Button8" type="Button" parent="GridContainer"]
-custom_minimum_size = Vector2(48, 48)
+[node name="Button8" parent="GridContainer" instance=ExtResource("1_b8dkn")]
 layout_mode = 2
 
-[node name="Button9" type="Button" parent="GridContainer"]
-custom_minimum_size = Vector2(48, 48)
+[node name="Button9" parent="GridContainer" instance=ExtResource("1_b8dkn")]
 layout_mode = 2
