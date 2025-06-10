@@ -2,6 +2,8 @@
 class_name MapGridButton
 extends PanelContainer
 
+signal on_pressed()
+
 const _RESOURCE: PackedScene = preload("res://scenes/components/map_grid/map_grid_button.tscn")
 
 @export var target: Info:
@@ -18,6 +20,8 @@ const _RESOURCE: PackedScene = preload("res://scenes/components/map_grid/map_gri
 var button: Button:
 	get(): return $Button
 
+@onready var _button: Button = %Button
+
 
 func _ready() -> void:
 	if target == null:
@@ -27,6 +31,8 @@ func _ready() -> void:
 	button.text = target.icon
 
 
-
 static func create() -> MapGridButton:
 	return _RESOURCE.instantiate()
+
+func _on_button_button_down() -> void:
+	on_pressed.emit()

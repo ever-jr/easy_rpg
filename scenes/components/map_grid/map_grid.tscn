@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://bksmpv1hw7cqu"]
 
 [ext_resource type="PackedScene" uid="uid://beta06mnd0clm" path="res://scenes/components/map_grid/map_grid_button.tscn" id="1_b8dkn"]
-[ext_resource type="Script" uid="uid://1do8l7hlyg0c" path="res://scenes/components/map_grid/map_grid.gd" id="1_e74ws"]
+[ext_resource type="Script" uid="uid://cdo1rhv3as073" path="res://scenes/components/map_grid/map_grid.gd" id="1_e74ws"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yfgga"]
 

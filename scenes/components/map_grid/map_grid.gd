@@ -2,6 +2,8 @@
 class_name MapGrid
 extends PanelContainer
 
+signal on_grid_button_pressed(button: MapGridButton)
+
 @export var columns: int = 3:
 	get(): return columns
 	set(value):
@@ -22,6 +24,12 @@ extends PanelContainer
 
 func _ready() -> void:
 	_update_grid()
+	
+	if not Engine.is_editor_hint():
+		for node: Node in grid.get_children():
+			if node is  MapGridButton:
+				if not node.on_pressed.is_connected(_on_grid_button_pressed):
+					node.on_pressed.connect(_on_grid_button_pressed.bind(node))
 
 
 func _update_grid() -> void:
@@ -40,6 +48,10 @@ func _update_grid() -> void:
 
 		for i in range(current_nodes, current_nodes + missing_nodes):
 			var new_button := MapGridButton.create()
+			
+			if not Engine.is_editor_hint():
+				new_button.on_pressed.connect(_on_grid_button_pressed.bind(new_button))
+			
 			grid.add_child(new_button)
 
 	# delete exceeding nodes
@@ -53,8 +65,17 @@ func _update_grid() -> void:
 			if node == null:
 				print("node {0} is invalid".format([i]))
 				continue
-
+			
+			if not Engine.is_editor_hint():
+				if node is MapGridButton:
+					node.on_pressed.disconnect(_on_grid_button_pressed)
+			
 			node.queue_free()
 	
 	for node: Node in grid.get_children():
 		pass
+
+
+func _on_grid_button_pressed(button: MapGridButton) -> void:
+	print(button.name)
+	on_grid_button_pressed.emit(button)

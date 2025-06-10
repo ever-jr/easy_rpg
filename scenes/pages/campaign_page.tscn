@@ -1,9 +1,23 @@
-[gd_scene load_steps=4 format=3 uid="uid://dlm1waxd36ccm"]
+[gd_scene load_steps=8 format=3 uid="uid://dlm1waxd36ccm"]
 
-[ext_resource type="Script" uid="uid://cb2cy3btwrk7d" path="res://scenes/pages/campaign_page.gd" id="1_n4whh"]
+[ext_resource type="Script" uid="uid://ce3udxwop1ctg" path="res://scenes/pages/campaign_page.gd" id="1_n4whh"]
 [ext_resource type="PackedScene" uid="uid://bksmpv1hw7cqu" path="res://scenes/components/map_grid/map_grid.tscn" id="2_cltbf"]
+[ext_resource type="Script" uid="uid://bgltupsvw2gv5" path="res://scenes/components/utils/pawn_selection_list.gd" id="3_hatcx"]
+[ext_resource type="Script" uid="uid://ddqv0ui6wdlvi" path="res://resources/models/basic_info.gd" id="4_hog5k"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n4whh"]
+
+[sub_resource type="Resource" id="Resource_gpepu"]
+script = ExtResource("4_hog5k")
+display_name = "Kisser"
+icon = "😘"
+metadata/_custom_type_script = "uid://ddqv0ui6wdlvi"
+
+[sub_resource type="Resource" id="Resource_kjn0d"]
+script = ExtResource("4_hog5k")
+display_name = "Skeleton"
+icon = "💀"
+metadata/_custom_type_script = "uid://ddqv0ui6wdlvi"
 
 [node name="CampaignPage" type="Control"]
 layout_mode = 3
@@ -173,11 +187,52 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "👤"
 
+[node name="PawnSelection" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="PawnSelection"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="PawnSelection/Panel"]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="ItemList" type="ItemList" parent="PawnSelection/Panel/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+item_count = 2
+item_0/text = "😘 - Kisser"
+item_1/text = "💀 - Skeleton"
+script = ExtResource("3_hatcx")
+_list = Array[ExtResource("4_hog5k")]([SubResource("Resource_gpepu"), SubResource("Resource_kjn0d")])
+
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 
 [connection signal="button_down" from="Panel/VBoxContainer/HBoxContainer/ButtonSettings" to="." method="_on_button_settings_button_down"]
 [connection signal="button_down" from="Panel/VBoxContainer/Content/Panel/VBoxContainer/VBoxContainer2/ButtonDecrementGridWidth" to="." method="_on_button_decrement_grid_width_button_down"]
 [connection signal="button_down" from="Panel/VBoxContainer/Content/Panel/VBoxContainer/VBoxContainer/ButtonIncrementGridHeight" to="." method="_on_button_increment_grid_height_button_down"]
+[connection signal="on_grid_button_pressed" from="Panel/VBoxContainer/Content/Panel/VBoxContainer/VBoxContainer/ScrollContainer/MapGrid" to="." method="_on_map_grid_on_grid_button_pressed"]
 [connection signal="button_down" from="Panel/VBoxContainer/Content/Panel/VBoxContainer/VBoxContainer/ButtonDecrementGridHeight" to="." method="_on_button_decrement_grid_height_button_down"]
 [connection signal="button_down" from="Panel/VBoxContainer/Content/Panel/VBoxContainer/VBoxContainer3/ButtonIncrementGridWidth" to="." method="_on_button_increment_grid_width_button_down"]
 [connection signal="property_list_changed" from="HTTPRequest" to="." method="_on_http_request_property_list_changed"]
