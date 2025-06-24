@@ -9,44 +9,47 @@ var campaign_id: int = -1
 
 # GETTERS
 var email: String:
-    get(): return _sign_user_data.email
+	get(): return _sign_user_data.email
 
 var access_token: String:
-    get(): return _sign_user_data.auth_token
+	get(): return _sign_user_data.auth_token
 
 var unique_id: String:
-    get(): return _sign_user_data.id
+	get(): return _sign_user_data.id
 
 var refresh_token: String:
-    get(): return _sign_user_data.refresh_token
+	get(): return _sign_user_data.refresh_token
+
+var is_master: bool:
+	get(): return true
 
 
 # METHODS
 func _ready() -> void:
-    if Settings.remember_credentials:
-        _sign_user_data = SignUserData.load()
+	if Settings.remember_credentials:
+		_sign_user_data = SignUserData.load()
 
 
 func is_logged() -> bool:
-    if _sign_user_data == null:
-        return false
-    else:
-        return _sign_user_data.is_valid()
+	if _sign_user_data == null:
+		return false
+	else:
+		return _sign_user_data.is_valid()
 
-    
+	
 func login(in_sign_user_data: SignUserData) -> void:
-    if not is_logged() and in_sign_user_data:
-        _sign_user_data = in_sign_user_data
+	if not is_logged() and in_sign_user_data:
+		_sign_user_data = in_sign_user_data
 
-        if Settings.remember_credentials:
-            _sign_user_data.save()
+		if Settings.remember_credentials:
+			_sign_user_data.save()
 
 
 func logout() -> void:
-    _sign_user_data.free()
-    _sign_user_data = null
+	_sign_user_data.free()
+	_sign_user_data = null
 
 
 func clear_saved_credentials() -> void:
-    if _sign_user_data:
-        _sign_user_data.clear_save()
+	if _sign_user_data:
+		_sign_user_data.clear_save()

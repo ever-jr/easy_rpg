@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://b2noswbcpiyfm"]
+
+[ext_resource type="PackedScene" uid="uid://cfv7vcjqke5hf" path="res://scenes/pages/login_page.tscn" id="1_01eis"]
+[ext_resource type="Script" uid="uid://b3eophol70ptt" path="res://scenes/pages/root.gd" id="1_ku6qa"]
+[ext_resource type="PackedScene" uid="uid://cdklgov7mtnc2" path="res://scenes/pages/campaigns_list_page.tscn" id="3_7srwn"]
+[ext_resource type="PackedScene" uid="uid://dlm1waxd36ccm" path="res://scenes/pages/campaign_page.tscn" id="3_q74bm"]
+
+[node name="Root" type="Node2D"]
+script = ExtResource("1_ku6qa")
+
+[node name="UI" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+
+[node name="LoginPage" parent="UI" instance=ExtResource("1_01eis")]
+unique_name_in_owner = true
+
+[node name="CampaignListPage" parent="UI" instance=ExtResource("3_7srwn")]
+unique_name_in_owner = true
+visible = false
+
+[node name="CampaignPage" parent="UI" instance=ExtResource("3_q74bm")]
+unique_name_in_owner = true
+visible = false
+
+[connection signal="logged" from="UI/LoginPage" to="." method="_on_login_page_logged"]
+[connection signal="on_campaign_selected" from="UI/CampaignListPage" to="." method="_on_campaign_list_page_on_campaign_selected"]

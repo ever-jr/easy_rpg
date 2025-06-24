@@ -1,5 +1,7 @@
 extends Control
 
+signal logged()
+
 @onready var input_email: LineEdit = %Email
 @onready var input_password: LineEdit = %Password
 @onready var button_login: Button = %ButtonLogIn
@@ -50,8 +52,10 @@ func _on_login_request_request_completed(_result: int, response_code: int, _head
 		LoggedUser.login(user_data)
 
 		if LoggedUser.is_logged():
-			var home_page_path: String = "res://scenes/pages/home_page.tscn"
-			get_tree().change_scene_to_file(home_page_path)
+			#var home_page_path: String = "res://scenes/pages/home_page.tscn"
+			#get_tree().change_scene_to_file(home_page_path)
+			logged.emit()
+			pass
 
 
 	else:

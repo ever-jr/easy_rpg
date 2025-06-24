@@ -1,9 +1,9 @@
 [gd_scene load_steps=3 format=3 uid="uid://cdklgov7mtnc2"]
 
-[ext_resource type="Script" uid="uid://cvwrstn6xlqmx" path="res://scenes/pages/home_page.gd" id="1_y31hc"]
+[ext_resource type="Script" uid="uid://cc2g1hnlep7pd" path="res://scenes/pages/campaigns_list_page.gd" id="1_y31hc"]
 [ext_resource type="PackedScene" uid="uid://db7n32karbfnd" path="res://scenes/components/campaign_button.tscn" id="2_o0468"]
 
-[node name="HomePage" type="Control"]
+[node name="CampaignsListPage" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
