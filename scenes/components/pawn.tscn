@@ -1,0 +1,43 @@
+[gd_scene load_steps=4 format=3 uid="uid://u3msuwk1weqp"]
+
+[ext_resource type="Script" uid="uid://bu5n4aactisve" path="res://scenes/components/pawn.gd" id="1_jgl5h"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_58uyk"]
+radius = 31.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_58uyk"]
+font_size = 48
+
+[node name="Pawn" type="Node2D"]
+script = ExtResource("1_jgl5h")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_58uyk")
+debug_color = Color(4.57242e-06, 0.625302, 0.521403, 0.42)
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "💀"
+label_settings = SubResource("LabelSettings_58uyk")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HoldTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.5
+one_shot = true
+
+[connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]
+[connection signal="timeout" from="HoldTimer" to="." method="_on_hold_timer_timeout"]

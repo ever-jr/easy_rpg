@@ -9,7 +9,7 @@ extends Node2D
 		elif not campaign:
 			show_page(campaign_list_page)
 		else:
-			show_page(campaign_page)
+			hide_pages()
 
 @onready var ui: CanvasLayer = %UI
 @onready var login_page: Control = %LoginPage
@@ -23,7 +23,8 @@ func _ready() -> void:
 	elif not campaign:
 		show_page(campaign_list_page)
 	else:
-		show_page(campaign_page)
+		hide_pages()
+
 
 
 func show_page(page_to_show: Control) -> void:
@@ -33,7 +34,11 @@ func show_page(page_to_show: Control) -> void:
 				page.show()
 			else:
 				page.hide()
-	
+
+func hide_pages() -> void:
+	for page: Node in ui.get_children():
+		if page is Control:
+			page.hide()
 
 func _on_login_page_logged() -> void:
 	print("logged!")

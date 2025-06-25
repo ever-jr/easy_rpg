@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://y8pjge65ho6o"]
+
+[ext_resource type="Texture2D" uid="uid://dfwn6g7go8jla" path="res://assets/textures/grid_test.png" id="1_s1ery"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p1pbp"]
+size = Vector2(64, 64)
+
+[node name="Spot" type="Node2D"]
+
+[node name="Area2D" type="Area2D" parent="."]
+z_index = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(32, 32)
+shape = SubResource("RectangleShape2D_p1pbp")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(32, 32)
+texture = ExtResource("1_s1ery")

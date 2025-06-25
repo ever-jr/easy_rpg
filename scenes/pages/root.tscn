@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://b2noswbcpiyfm"]
+[gd_scene load_steps=7 format=3 uid="uid://b2noswbcpiyfm"]
 
 [ext_resource type="PackedScene" uid="uid://cfv7vcjqke5hf" path="res://scenes/pages/login_page.tscn" id="1_01eis"]
 [ext_resource type="Script" uid="uid://b3eophol70ptt" path="res://scenes/pages/root.gd" id="1_ku6qa"]
 [ext_resource type="PackedScene" uid="uid://cdklgov7mtnc2" path="res://scenes/pages/campaigns_list_page.tscn" id="3_7srwn"]
 [ext_resource type="PackedScene" uid="uid://dlm1waxd36ccm" path="res://scenes/pages/campaign_page.tscn" id="3_q74bm"]
+[ext_resource type="PackedScene" uid="uid://y8pjge65ho6o" path="res://scenes/components/spot.tscn" id="5_6wxcr"]
+[ext_resource type="PackedScene" uid="uid://u3msuwk1weqp" path="res://scenes/components/pawn.tscn" id="6_83ks2"]
 
 [node name="Root" type="Node2D"]
 script = ExtResource("1_ku6qa")
@@ -13,6 +15,7 @@ unique_name_in_owner = true
 
 [node name="LoginPage" parent="UI" instance=ExtResource("1_01eis")]
 unique_name_in_owner = true
+visible = false
 
 [node name="CampaignListPage" parent="UI" instance=ExtResource("3_7srwn")]
 unique_name_in_owner = true
@@ -21,6 +24,39 @@ visible = false
 [node name="CampaignPage" parent="UI" instance=ExtResource("3_q74bm")]
 unique_name_in_owner = true
 visible = false
+
+[node name="Node2D" type="Node2D" parent="."]
+position = Vector2(160, 352)
+metadata/_edit_group_ = true
+
+[node name="Spot" parent="Node2D" instance=ExtResource("5_6wxcr")]
+
+[node name="Spot2" parent="Node2D" instance=ExtResource("5_6wxcr")]
+position = Vector2(80, 0)
+
+[node name="Spot3" parent="Node2D" instance=ExtResource("5_6wxcr")]
+position = Vector2(160, 0)
+
+[node name="Spot6" parent="Node2D" instance=ExtResource("5_6wxcr")]
+position = Vector2(160, 80)
+
+[node name="Spot7" parent="Node2D" instance=ExtResource("5_6wxcr")]
+position = Vector2(0, 160)
+
+[node name="Spot8" parent="Node2D" instance=ExtResource("5_6wxcr")]
+position = Vector2(80, 160)
+
+[node name="Spot9" parent="Node2D" instance=ExtResource("5_6wxcr")]
+position = Vector2(160, 160)
+
+[node name="Spot4" parent="Node2D" instance=ExtResource("5_6wxcr")]
+position = Vector2(0, 80)
+
+[node name="Spot5" parent="Node2D" instance=ExtResource("5_6wxcr")]
+position = Vector2(80, 80)
+
+[node name="Pawn" parent="." instance=ExtResource("6_83ks2")]
+position = Vector2(212, 284)
 
 [connection signal="logged" from="UI/LoginPage" to="." method="_on_login_page_logged"]
 [connection signal="on_campaign_selected" from="UI/CampaignListPage" to="." method="_on_campaign_list_page_on_campaign_selected"]
