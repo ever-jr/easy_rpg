@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://u3msuwk1weqp"]
+[gd_scene load_steps=5 format=3 uid="uid://u3msuwk1weqp"]
 
 [ext_resource type="Script" uid="uid://bu5n4aactisve" path="res://scenes/components/pawn.gd" id="1_jgl5h"]
+[ext_resource type="PackedScene" uid="uid://c5chrmltlwc58" path="res://scenes/components/input/holder.tscn" id="2_ei5j0"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_58uyk"]
 radius = 31.0
@@ -12,6 +13,7 @@ font_size = 48
 script = ExtResource("1_jgl5h")
 
 [node name="Area2D" type="Area2D" parent="."]
+unique_name_in_owner = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_58uyk")
@@ -39,5 +41,12 @@ unique_name_in_owner = true
 wait_time = 0.5
 one_shot = true
 
+[node name="Holder" parent="." node_paths=PackedStringArray("area") instance=ExtResource("2_ei5j0")]
+position = Vector2(-1, 49)
+area = NodePath("../Area2D")
+holding_time = 2.0
+
 [connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]
+[connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]
 [connection signal="timeout" from="HoldTimer" to="." method="_on_hold_timer_timeout"]
