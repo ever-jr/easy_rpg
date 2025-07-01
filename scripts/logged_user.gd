@@ -3,6 +3,7 @@ extends Node
 
 # PROPERTIES
 var _sign_user_data: SignUserData = null
+var _player_data := PlayerData.new()
 
 var campaign_id: int = -1
 
@@ -20,9 +21,6 @@ var unique_id: String:
 var refresh_token: String:
 	get(): return _sign_user_data.refresh_token
 
-var is_master: bool:
-	get(): return true
-
 
 # METHODS
 func _ready() -> void:
@@ -36,7 +34,7 @@ func is_logged() -> bool:
 	else:
 		return _sign_user_data.is_valid()
 
-	
+
 func login(in_sign_user_data: SignUserData) -> void:
 	if not is_logged() and in_sign_user_data:
 		_sign_user_data = in_sign_user_data
@@ -53,3 +51,14 @@ func logout() -> void:
 func clear_saved_credentials() -> void:
 	if _sign_user_data:
 		_sign_user_data.clear_save()
+
+
+func is_master(campaign: CampaignData) -> bool:
+	if campaign:
+		return campaign.player_master.id == unique_id
+	
+	return false
+
+
+func get_player_data() -> PlayerData:
+	return _player_data

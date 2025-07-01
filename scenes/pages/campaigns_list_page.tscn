@@ -1,7 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://cdklgov7mtnc2"]
+[gd_scene load_steps=6 format=3 uid="uid://cdklgov7mtnc2"]
 
 [ext_resource type="Script" uid="uid://cc2g1hnlep7pd" path="res://scenes/pages/campaigns_list_page.gd" id="1_y31hc"]
 [ext_resource type="PackedScene" uid="uid://db7n32karbfnd" path="res://scenes/components/campaign_button.tscn" id="2_o0468"]
+[ext_resource type="Theme" uid="uid://b3wikmpra4mlj" path="res://resources/separator_theme.tres" id="3_77euk"]
+[ext_resource type="LabelSettings" uid="uid://28dnpigccebq" path="res://resources/label_title.tres" id="3_o2xcv"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8h4ec"]
 
 [node name="CampaignsListPage" type="Control"]
 layout_mode = 3
@@ -13,7 +17,6 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_y31hc")
-button_resource = ExtResource("2_o0468")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
@@ -44,12 +47,99 @@ horizontal_alignment = 1
 layout_mode = 2
 theme_override_constants/separation = 48
 
-[node name="ListCampaigns" type="VBoxContainer" parent="Panel/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="ListCampaigns" type="VBoxContainer" parent="Panel/VBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="CampaignButton" parent="Panel/VBoxContainer/ListCampaigns" instance=ExtResource("2_o0468")]
+[node name="CampaignButton" parent="Panel/VBoxContainer/VBoxContainer/ListCampaigns" instance=ExtResource("2_o0468")]
 layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="Panel/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 24
+theme_override_styles/separator = SubResource("StyleBoxEmpty_8h4ec")
+
+[node name="ButtonNewCampaign" type="Button" parent="Panel/VBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+text = "+"
+
+[node name="PanelNewCampaign" type="Panel" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="PanelNewCampaign"]
+custom_minimum_size = Vector2(0, 324)
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 24.0
+offset_top = -60.0
+offset_right = -24.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelNewCampaign/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 24.0
+offset_right = -24.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="PanelNewCampaign/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Create Campaign"
+label_settings = ExtResource("3_o2xcv")
+horizontal_alignment = 1
+
+[node name="HSeparator2" type="HSeparator" parent="PanelNewCampaign/Panel/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("3_77euk")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelNewCampaign/Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="InputCampaignName" type="LineEdit" parent="PanelNewCampaign/Panel/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Campaign's Name"
+
+[node name="InputCampaignIcon" type="LineEdit" parent="PanelNewCampaign/Panel/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "Icon"
+
+[node name="HSeparator" type="HSeparator" parent="PanelNewCampaign/Panel/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("3_77euk")
+
+[node name="ButtonCreateNewCampaign" type="Button" parent="PanelNewCampaign/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Create"
+
+[node name="ButtonCancelNewCampaign" type="Button" parent="PanelNewCampaign/Panel/VBoxContainer"]
+layout_mode = 2
+text = "Cancel"
 
 [node name="Timer" type="Timer" parent="."]
 unique_name_in_owner = true
@@ -57,5 +147,16 @@ wait_time = 10.0
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 
+[node name="HTTPRequestCreateCampaign" type="HTTPRequest" parent="."]
+unique_name_in_owner = true
+
+[node name="HTTPRequestRemoveCampaign" type="HTTPRequest" parent="."]
+unique_name_in_owner = true
+
+[connection signal="button_down" from="Panel/VBoxContainer/VBoxContainer/ButtonNewCampaign" to="." method="_on_button_new_campaign_button_down"]
+[connection signal="button_down" from="PanelNewCampaign/Panel/VBoxContainer/ButtonCreateNewCampaign" to="." method="_on_button_create_new_campaign_button_down"]
+[connection signal="button_down" from="PanelNewCampaign/Panel/VBoxContainer/ButtonCancelNewCampaign" to="." method="_on_button_cancel_new_campaign_button_down"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="request_completed" from="HTTPRequest" to="." method="_on_http_request_request_completed"]
+[connection signal="request_completed" from="HTTPRequestCreateCampaign" to="." method="_on_http_request_create_campaign_request_completed"]
+[connection signal="request_completed" from="HTTPRequestRemoveCampaign" to="." method="_on_http_request_remove_campaign_request_completed"]

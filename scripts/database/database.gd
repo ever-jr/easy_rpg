@@ -3,6 +3,7 @@ extends Node
 # URLs
 const _DATABASE_URL_ROOT: String = "https://easy-rpg-ever-default-rtdb.firebaseio.com"
 const _DATABASE_URL_PLAYERS: String = _DATABASE_URL_ROOT + "/players"
+const _DATABASE_URL_CAMPAIGNS: String = _DATABASE_URL_ROOT + "/campaigns"
 
 const _URL_SIGN_UP_WITHOUT_KEY: String = "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key="
 const _URL_SIGN_IN_WITHOUT_KEY: String = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key="
@@ -56,5 +57,23 @@ func sign_in_with_token(http_request: HTTPRequest, id_token: String) -> void:
 
 
 func fetch_campaigns(http_request: HTTPRequest, access_token: String) -> void:
-	var url: String = _DATABASE_URL_ROOT + "/campaigns.json"
+	var url: String = _DATABASE_URL_CAMPAIGNS + ".json"
 	http_request.request(url, [], HTTPClient.METHOD_GET)
+
+
+func register_campaign(http_request: HTTPRequest, new_campaign: CampaignData) -> void:
+	var url: String = _DATABASE_URL_CAMPAIGNS + "/" + new_campaign.id + ".json"
+	var access_token: String = LoggedUser.access_token
+	var headers: PackedStringArray = ["Content-Type: application/x-www-form-urlencoded", "Authorization: "+access_token]
+	var body := JSON.stringify(new_campaign.to_dictionary())
+	print(body)
+	http_request.request(url, headers, HTTPClient.METHOD_PUT, body)
+
+
+func remove_campaign(http_request: HTTPRequest, campaign: CampaignData) -> void:
+	var url: String = _DATABASE_URL_CAMPAIGNS + "/" + campaign.id + ".json"
+	var access_token: String = LoggedUser.access_token
+	var headers: PackedStringArray = ["Content-Type: application/x-www-form-urlencoded", "Authorization: "+access_token]
+	var body := JSON.stringify(campaign.to_dictionary())
+	print(body)
+	http_request.request(url, headers, HTTPClient.METHOD_DELETE, body)

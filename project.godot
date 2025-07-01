@@ -28,6 +28,16 @@ window/size/viewport_height=960
 window/size/window_width_override=540
 window/size/window_height_override=960
 
+[file_customization]
+
+folder_colors={
+"res://assets/": "yellow",
+"res://config/": "gray",
+"res://resources/": "orange",
+"res://scenes/": "red",
+"res://scripts/": "purple"
+}
+
 [input]
 
 click={

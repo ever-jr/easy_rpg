@@ -11,7 +11,27 @@ signal hold_completed()
 		if value > 0.0:
 			holding_time = value
 
-var is_input_inside_area := false
+var is_inside_area := false:
+	get(): return is_inside_area
+	set(value):
+		if is_inside_area != value:
+			is_inside_area = value
+			
+			if is_inside_area:
+				Input.set_default_cursor_shape(Input.CURSOR_POINTING_HAND)
+			else:
+				Input.set_default_cursor_shape(Input.CURSOR_ARROW)
+
+
+var is_holding := false:
+	get(): return is_holding
+	set(value):
+		if is_holding != value:
+			is_holding = value
+			if is_holding:
+				Input.set_default_cursor_shape(Input.CURSOR_DRAG)
+			else:
+				Input.set_default_cursor_shape(Input.CURSOR_ARROW)
 
 var is_input_pressed := false:
 	get(): return is_input_pressed
@@ -20,6 +40,7 @@ var is_input_pressed := false:
 			is_input_pressed = value
 			
 			if not is_input_pressed:
+				is_holding = false
 				hold_canceled.emit()
 			
 			if _progress.value != _progress.max_value:
@@ -54,14 +75,14 @@ func _on_area_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> 
 		is_input_pressed = event.pressed
 
 
-func _on_area_mouse_exited() -> void:
-	is_input_inside_area = false
-	is_input_pressed = false
-	print("leaved")
-
 func _on_area_mouse_entered() -> void:
-	is_input_inside_area = true
-	print("entered")
+	is_inside_area = true
+
+
+func _on_area_mouse_exited() -> void:
+	is_inside_area = false
+	if is_input_pressed and not is_holding:
+		is_input_pressed = false
 
 
 func _area_connect_events(area: Area2D) -> void:
@@ -69,11 +90,12 @@ func _area_connect_events(area: Area2D) -> void:
 		if not area.input_event.is_connected(_on_area_input_event):
 			area.input_event.connect(_on_area_input_event)
 		
-		if not area.area_entered.is_connected(_on_area_mouse_entered):
-			area.area_entered.connect(_on_area_mouse_entered)
+		if not area.mouse_entered.is_connected(_on_area_mouse_entered):
+			area.mouse_entered.connect(_on_area_mouse_entered)
 		
-		if not area.area_exited.is_connected(_on_area_mouse_exited):
-			area.area_exited.connect(_on_area_mouse_exited)
+		if not area.mouse_exited.is_connected(_on_area_mouse_exited):
+			area.mouse_exited.connect(_on_area_mouse_exited)
+
 
 func _area_disconnect_events(area: Area2D) -> void:
 	if area:
@@ -97,7 +119,10 @@ func set_progress_enabled(enabled: bool) -> void:
 
 func _on_progress_reseted() -> void:
 	set_progress_enabled(false)
+	hold_canceled.emit()
 
 func _on_progress_completed() -> void:
+	is_holding = true
 	_progress.value = 0.0
 	set_progress_enabled(false)
+	hold_completed.emit()

@@ -17,13 +17,13 @@ func _ready() -> void:
 
 
 func _on_http_request_request_completed(_result: int, response_code: int, _headers: PackedStringArray, body: PackedByteArray) -> void:
-	if response_code == 200:
-		var campaigns: Array = JSON.parse_string(body.get_string_from_utf8())
+	if response_code == 200 and body:
+		var campaigns: Array[CampaignData] = DatabaseParser.to_campaigns(body)
 
-		var campaign_data: Dictionary = campaigns[id]
-		var basic_info := BasicInfo.find(campaign_data)
+		#var campaign_data: Dictionary = campaigns[id]
+		#var basic_info := BasicInfo.find(campaign_data)
 
-		title.text = basic_info.icon + " " + basic_info.display_name
+		#title.text = basic_info.icon + " " + basic_info.display_name
 
 
 func _on_http_request_property_list_changed() -> void:

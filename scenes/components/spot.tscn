@@ -1,11 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://y8pjge65ho6o"]
+[gd_scene load_steps=4 format=3 uid="uid://y8pjge65ho6o"]
 
 [ext_resource type="Texture2D" uid="uid://dfwn6g7go8jla" path="res://assets/textures/grid_test.png" id="1_s1ery"]
+[ext_resource type="Script" uid="uid://dou3u22url5np" path="res://scenes/components/spot.gd" id="1_waj8e"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p1pbp"]
 size = Vector2(64, 64)
 
 [node name="Spot" type="Node2D"]
+script = ExtResource("1_waj8e")
 
 [node name="Area2D" type="Area2D" parent="."]
 z_index = 1
@@ -17,3 +19,8 @@ shape = SubResource("RectangleShape2D_p1pbp")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(32, 32)
 texture = ExtResource("1_s1ery")
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="Area2D" to="." method="_on_area_2d_area_exited"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
